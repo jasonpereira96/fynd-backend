@@ -17,12 +17,6 @@ app.use(cors());
 
 const SCHEMA = 'public';
 
-/*
-client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-    console.log(err ? err.stack : res.rows[0].message) // Hello World!
-    client.end();
-});*/
-// respond with "hello world" when a GET request is made to the homepage
 app.get('/', function (req, res) {
     res.send('hello world');
 });

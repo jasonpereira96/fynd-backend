@@ -1,8 +1,10 @@
 var express = require('express')
 const { Client } = require('pg');
 const cors = require('cors');
+const path = require('path');
+const PORT = process.env.PORT || 5000;
 
-const PORT = 3001; //application server port
+// const PORT = 3001; //application server port
 const DB_PORT = 5432;
 const USERNAME = 'postgres';
 const PASSWORD = 'postgres';
@@ -221,9 +223,18 @@ app.get('/search', function (request, response) {
         }
     }
 });
+
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+// app.get('/', (req, res) => res.render('pages/index'));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+/*
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
-});
+});*/
 
 function getClient() {
     return new Client({

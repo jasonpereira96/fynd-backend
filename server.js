@@ -6,9 +6,17 @@ const PORT = process.env.PORT || 5000;
 
 // const PORT = 3001; //application server port
 const DB_PORT = 5432;
-const USERNAME = 'postgres';
-const PASSWORD = 'postgres';
-const HOST = 'localhost';
+
+// const USERNAME = 'postgres';
+// const PASSWORD = 'postgres';
+// const HOST = 'localhost';
+// const DATABASE = 'Movies'
+
+const USERNAME = 'cxqyzdmbsgnzxx';
+const HOST = 'ec2-18-203-7-163.eu-west-1.compute.amazonaws.com';
+const DATABASE = 'd92ch17m0ic12f';
+const PASSWORD = 'd960a0ea5e09081b4d642bfb3164c685cfe10f7516086399f7f61271c280e85e';
+
 
 const API_KEYS = [
     'aba102da-f581-4ff7-a350-b7b671f70e68',
@@ -240,7 +248,7 @@ function getClient() {
     return new Client({
         user: USERNAME,
         host: HOST,
-        database: 'Movies',
+        database: DATABASE,
         password: PASSWORD,
         port: DB_PORT
     });

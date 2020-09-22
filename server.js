@@ -34,8 +34,8 @@ app.use(authenticate);
 
 const SCHEMA = 'public';
 
-app.get('/', function (req, res) {
-    res.send('hello world');
+app.get('/', function (request, response) {
+    response.send('Welcome to the Movies DB REST API. See https://github.com/jasonpereira96/fynd-backend#movies-db-rest-api for documentation');
 });
 
 app.post('/credentials', function (request, response) {
@@ -286,6 +286,7 @@ function authenticate(request, response, next) {
         case '/movies':
         case '/genres':
         case '/search':
+        case '/':
             next();
             break;
         case '/add':

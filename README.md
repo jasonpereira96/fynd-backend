@@ -28,7 +28,7 @@ The base URL is: https://fynd-app.herokuapp.com/
 }
 ```
 ## Authentication
-For the APIs which require authentication, it is necessary to pass an API key in the body of the POST request.
+For the APIs which require authentication, it is necessary to pass an API key in the body of the POST request under the key `apiKey` (See curl examples).
 
 The following 3 API keys are valid:
 ```

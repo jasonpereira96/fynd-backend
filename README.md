@@ -314,6 +314,7 @@ Deletes a movie from the database.
 
 Parameters:
 - id (required)
+- apiKey (required)
 
 ```
 curl --location --request POST 'https://fynd-app.herokuapp.com/delete' \

@@ -8,12 +8,19 @@ const USERNAME = 'postgres';
 const PASSWORD = 'postgres';
 const HOST = 'localhost';
 
+const API_KEYS = [
+    'aba102da-f581-4ff7-a350-b7b671f70e68',
+    '68888a10-6c29-4313-8401-e05948a7af18',
+    '91f670f4-26c3-4e08-9fee-f44ee1e61484'
+];
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
+app.use(authenticate);
 
 const SCHEMA = 'public';
 
@@ -34,7 +41,7 @@ app.post('/credentials', function (request, response) {
         });
     }
 });
-app.get('/data', function (request, response) {
+app.get('/movies', function (request, response) {
     var promise1 = query({
         queryString: `select * from ${SCHEMA}.movies;`,
     });
@@ -65,20 +72,12 @@ app.get('/data', function (request, response) {
     });
 });
 
-app.get('/data1', function (request, response) {
-    query({
-        queryString: `select * from ${SCHEMA}.movies;`,
-    }).then(result => {
-        response.json(result.rows);
-    });
-});
-
 app.post('/add', function (request, response) {
     var { name, director, popularity, genreIds, imdb_score } = request.body;
     var queryString = `insert into ${SCHEMA}.movies (movie_name, director, popularity, imdb_score, genre_ids) 
         values($1, $2, $3, $4, $5) returning id;`;
-        console.log(queryString);
-        console.log(request.body);
+    console.log(queryString);
+    console.log(request.body);
     query({
         queryString,
         params: [name, director, popularity, imdb_score, genreIds]
@@ -92,12 +91,19 @@ app.post('/add', function (request, response) {
 app.post('/delete', function (request, response) {
     var { id } = request.body;
     query({
-        queryString: `delete from ${SCHEMA}.movies where id = $1;`,
+        queryString: `delete from ${SCHEMA}.movies where id = $1 returning id;`,
         params: [id]
     }).then(result => {
-        response.json({
-            deleted: true
-        });
+        if (result.rowCount === 0) {
+            response.json({
+                error: 'invalid movie id'
+            });
+        } else {
+            response.json({
+                id: result.rows[0].id,
+                deleted: true
+            });
+        }
     });
 });
 app.post('/update', function (request, response) {
@@ -123,6 +129,12 @@ app.post('/update', function (request, response) {
         predicates.push(`genre_ids = $${position++}`);
         params.push(genreIds);
     }
+    if (predicates.length === 0) {
+        response.json({
+            error: 'one field to update is mandatory'
+        });
+        return;
+    }
     var predicate = predicates.join(',');
     params.push(id);
 
@@ -134,13 +146,22 @@ app.post('/update', function (request, response) {
         queryString: queryString,
         params: params
     }).then(function (result) {
-        var id = result.rows[0].id;
-        return query({
-            queryString: `select * from ${SCHEMA}.movies where id = $1;`,
-            params: [id]
-        });
+        if (result.rowCount > 0) {
+            var id = result.rows[0].id;
+            return query({
+                queryString: `select * from ${SCHEMA}.movies where id = $1;`,
+                params: [id]
+            });
+        } else {
+            response.json({
+                error: 'invalid movie id'
+            });
+        }
     }).then(result => {
-        response.json(result.rows[0]);
+        response.json({
+            id: result.rows[0].id,
+            updated: true
+        });
     });
 });
 
@@ -155,17 +176,51 @@ app.get('/genres', function (request, response) {
 app.post('/addgenre', function (request, response) {
     // insert  into "Movies".public.genres (name) values('AAA');
     var { genre } = request.body;
-    query({
-        queryString: `insert into ${SCHEMA}.genres (name) values('${genre}') returning id;`,
-        params: []
-    }).then(result => {
+    if (!genre) {
         response.json({
-            genreId: result.rows[0].id,
-            added: true
+            error: 'genre is mandatory'
         });
-    })
+    } else {
+        query({
+            queryString: `insert into ${SCHEMA}.genres (name) values('${genre}') returning id;`,
+            params: []
+        }).then(result => {
+            response.json({
+                genreId: result.rows[0].id,
+                added: true
+            });
+        });
+    }
 });
 
+app.get('/search', function (request, response) {
+    var { name, director } = request.query;
+    if (!name && !director) {
+        response.json({
+            error: 'either name or director (or both) required'
+        });
+    } else {
+        if (name && !director) {
+            query({
+                queryString: `select  movie_name, imdb_score , director, popularity, id
+                  from ${SCHEMA}.movies where movie_name like $1;`,
+                params: [`%${name}%`]
+            }).then(movies => handleResult(movies, response));
+        } else if (!name && director) {
+            query({
+                queryString: `select  movie_name, imdb_score , director, popularity, id
+                  from ${SCHEMA}.movies where director like $1;`,
+                params: [`%${director}%`]
+            }).then(movies => handleResult(movies, response));
+        } else {
+            query({
+                queryString: `select  movie_name, imdb_score , director, popularity, id
+                  from ${SCHEMA}.movies where movie_name like $1 and director like $2;`,
+                params: [`%${name}%`, `%${director}%`]
+            }).then(movies => handleResult(movies, response));
+        }
+    }
+});
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
 });
@@ -202,4 +257,44 @@ function query(options) {
             console.log(e);
         });
     });
+}
+
+
+function authenticate(request, response, next) {
+    console.log(request.path);
+    switch (request.path) {
+        case '/credentials':
+        case '/movies':
+        case '/genres':
+        case '/search':
+            next();
+            break;
+        case '/add':
+        case '/delete':
+        case '/update':
+        case '/addgenre':
+            var { apiKey } = request.body;
+            if (apiKey && API_KEYS.includes(apiKey)) {
+                next();
+            } else {
+                response.json({
+                    error: 'authentication failed'
+                });
+            }
+            break;
+        default:
+            response.json({
+                error: 'invalid API'
+            });
+    }
+}
+
+
+function handleResult(movies, response) {
+    movies = movies.rows;
+    movies.forEach(movie => {
+        movie.name = movie.movie_name;
+        delete movie.movie_name;
+    });
+    response.json(movies);
 }

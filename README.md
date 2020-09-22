@@ -12,6 +12,7 @@ The following APIs are provided:
 - /addgenre (requires authentication)
 
 All the above APIs return the response in JSON format.
+The base URL is: https://fynd-app.herokuapp.com/
 
 ## Error conditions
 1. For the APIs that require authentication, in case of an invalid API key, the API will return 
@@ -46,7 +47,7 @@ Fields returned:
 - imdb_score
 - director
 ```
-$curl http://localhost:3001/movies
+curl https://fynd-app.herokuapp.com/movies
 ```
 Response:
 ```
@@ -142,7 +143,7 @@ Response:
 Returns an array of movie genres currently in the DB.
 
 ```
-$curl http://localhost:3001/genres
+curl https://fynd-app.herokuapp.com/genres
 ```
 Response:
 ```
@@ -186,7 +187,7 @@ Search is case-sensitive.
 **NOTE: either name or director is required. Both can be supplied.**
 
 ```
-curl --location --request GET 'http://localhost:3001/search?director=Sp'
+curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp'
 ```
 Response:
 ```
@@ -237,7 +238,7 @@ Response:
 ```
 
 ```
-curl --location --request GET 'http://localhost:3001/search?name=Ja' 
+curl --location --request GET 'https://fynd-app.herokuapp.com/search?name=Ja' 
 ```
 Response: 
 ```
@@ -260,7 +261,7 @@ Response:
 ```
 
 ```
-curl --location --request GET 'http://localhost:3001/search?director=Sp&name=Ja'
+curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp&name=Ja'
 ```
 Response:
 ```
@@ -293,7 +294,7 @@ Parameters:
 - popularity (required)
 - apiKey (required)
 ```
-curl --location --request POST 'http://localhost:3001/add' \
+curl --location --request POST 'https://fynd-app.herokuapp.com/add' \
 --data-urlencode 'name=The Last Dance' \
 --data-urlencode 'director=Sylvester Stallone' \
 --data-urlencode 'popularity=55' \
@@ -315,7 +316,7 @@ Parameters:
 - id (required)
 
 ```
-curl --location --request POST 'http://localhost:3001/delete' \
+curl --location --request POST 'https://fynd-app.herokuapp.com/delete' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68' \
 --data-urlencode 'id=200'
 ```
@@ -342,7 +343,7 @@ Parameters:
 **Note: Atleast one of the optional parameters is mandatory**
 
 ```
-curl --location --request POST 'http://localhost:3001/update' \
+curl --location --request POST 'https://fynd-app.herokuapp.com/update' \
 --data-urlencode 'director=Sylvester Stallone Statham' \
 --data-urlencode 'popularity=55' \
 --data-urlencode 'imdb_score=3.5' \
@@ -366,7 +367,7 @@ Parameters:
 
 
 ```
-curl --location --request POST 'http://localhost:3001/addgenre' \
+curl --location --request POST 'https://fynd-app.herokuapp.com/addgenre' \
 --data-urlencode 'genre=Fantasy-Musical' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68'
 ```

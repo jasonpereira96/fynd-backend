@@ -168,10 +168,22 @@ app.post('/update', function (request, response) {
             });
         }
     }).then(result => {
-        response.json({
-            ...result,
+        let ret = {
+            ...result.rows[0],
             id: result.rows[0].id,
             updated: true
+        };
+        ret.name = ret.movie_name;
+        delete ret.movie_name;
+    }).then(result => {
+        let genreIds = JSON.parse(result.genre_ids);
+        let ids = genreIds.join(' , ');
+        query({
+            queryString: `select * from ${SCHEMA}.genres where id in ( ${ids} )`
+        }).then(genresResult => {
+            let genres = genresResult.rows.map(row => row.name);
+            result.genre = genres;
+            response.json(result);
         });
     });
 });

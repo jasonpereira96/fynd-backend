@@ -175,6 +175,7 @@ app.post('/update', function (request, response) {
         };
         ret.name = ret.movie_name;
         delete ret.movie_name;
+        return result;
     }).then(result => {
         let genreIds = JSON.parse(result.genre_ids);
         let ids = genreIds.join(' , ');

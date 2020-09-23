@@ -169,6 +169,7 @@ app.post('/update', function (request, response) {
         }
     }).then(result => {
         response.json({
+            ...result,
             id: result.rows[0].id,
             updated: true
         });

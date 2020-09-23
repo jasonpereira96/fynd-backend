@@ -52,7 +52,7 @@ Fields returned:
 curl https://fynd-app.herokuapp.com/movies
 ```
 Response:
-```
+```json
 [
     {
         "imdb_score": 8.8,
@@ -149,7 +149,7 @@ Returns an array of movie genres currently in the DB.
 curl https://fynd-app.herokuapp.com/genres
 ```
 Response:
-```
+```json
 [
     {
         "name": "Adventure",
@@ -194,7 +194,7 @@ Search is case-sensitive.
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp'
 ```
 Response:
-```
+```json
 [
     {
         "imdb_score": 8.3,
@@ -246,7 +246,7 @@ Response:
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?name=Ja' 
 ```
 Response: 
-```
+```json
 [
     {
         "imdb_score": 8.3,
@@ -270,7 +270,7 @@ Response:
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp&name=Ja'
 ```
 Response:
-```
+```json
 [
     {
         "imdb_score": 8.3,
@@ -311,7 +311,7 @@ curl --location --request POST 'https://fynd-app.herokuapp.com/add' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68'
 ```
 Response:
-```
+```json
 {
     "movieId": 272,
     "added": true
@@ -332,7 +332,7 @@ curl --location --request POST 'https://fynd-app.herokuapp.com/delete' \
 --data-urlencode 'id=200'
 ```
 Response:
-```
+```json
 {
     "id": 275,
     "deleted": true
@@ -362,7 +362,7 @@ curl --location --request POST 'https://fynd-app.herokuapp.com/update' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68'
 ```
 Response:
-```
+```json
 {
     "movie_name":"Jumanji-The End",
     "imdb_score":3.52,
@@ -391,7 +391,7 @@ curl --location --request POST 'https://fynd-app.herokuapp.com/addgenre' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68'
 ```
 Response:
-```
+```json
 {
     "genreId": 98,
     "added": true

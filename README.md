@@ -3,13 +3,13 @@
 # Movies DB REST API
 
 The following APIs are provided:
-- /movies
-- /genres
-- /search
-- /add (requires authentication)
-- /delete (requires authentication)
-- /update (requires authentication)
-- /addgenre (requires authentication)
+- [/movies](https://github.com/jasonpereira96/fynd-backend/#movies)
+- [/genres](https://github.com/jasonpereira96/fynd-backend/#genres)
+- [/search](https://github.com/jasonpereira96/fynd-backend/#search)
+- [/add](https://github.com/jasonpereira96/fynd-backend/#add) (requires authentication)
+- [/delete](https://github.com/jasonpereira96/fynd-backend/#delete) (requires authentication)
+- [/update](https://github.com/jasonpereira96/fynd-backend/#update) (requires authentication)
+- [/addgenre](https://github.com/jasonpereira96/fynd-backend/#addgenre) (requires authentication)
 
 All the above APIs return the response in JSON format.
 The base URL is: https://fynd-app.herokuapp.com/
@@ -369,9 +369,10 @@ Response:
     "director":"Rock",
     "popularity":75,
     "genre_ids":"[3,4,5]",
-    "genre":["Family","Fantasy","Musical"]}
+    "genre":["Family","Fantasy","Musical"],
     "id":271,
-    "updated":true,
+    "updated":true
+}
 ```
 ---
 

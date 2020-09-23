@@ -175,7 +175,7 @@ app.post('/update', function (request, response) {
         };
         ret.name = ret.movie_name;
         delete ret.movie_name;
-        return result;
+        return ret;
     }).then(result => {
         console.log('AAA');
         console.log(result);

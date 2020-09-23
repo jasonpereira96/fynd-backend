@@ -173,8 +173,6 @@ app.post('/update', function (request, response) {
             id: result.rows[0].id,
             updated: true
         };
-        ret.name = ret.movie_name;
-        delete ret.movie_name;
         return ret;
     }).then(result => {
         console.log('AAA');

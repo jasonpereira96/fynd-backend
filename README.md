@@ -36,6 +36,8 @@ aba102da-f581-4ff7-a350-b7b671f70e68
 68888a10-6c29-4313-8401-e05948a7af18
 91f670f4-26c3-4e08-9fee-f44ee1e61484
 ```
+---
+
 ## /movies
 
 Returns an array of all the movies in the database.
@@ -138,6 +140,7 @@ Response:
     }
 ]
 ```
+---
 
 ## /genres
 Returns an array of movie genres currently in the DB.
@@ -174,6 +177,7 @@ Response:
     }
 ]
 ```
+---
 
 ## /search
 Used to search for movies by name and/or director.
@@ -236,6 +240,7 @@ Response:
     }
 ]
 ```
+---
 
 ```
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?name=Ja' 
@@ -259,6 +264,7 @@ Response:
     }
 ]
 ```
+---
 
 ```
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp&name=Ja'
@@ -282,6 +288,8 @@ Response:
     }
 ]
 ``` 
+---
+
 ## /add
 
 Adds a movie to the database.
@@ -309,6 +317,8 @@ Response:
     "added": true
 }
 ```
+---
+
 ## /delete
 Deletes a movie from the database.
 
@@ -328,6 +338,7 @@ Response:
     "deleted": true
 }
 ```
+---
 
 ## /update
 
@@ -353,10 +364,16 @@ curl --location --request POST 'https://fynd-app.herokuapp.com/update' \
 Response:
 ```
 {
-    "movieId": 272,
-    "updated": true
-}
+    "movie_name":"Jumanji-The End",
+    "imdb_score":3.52,
+    "director":"Rock",
+    "popularity":75,
+    "genre_ids":"[3,4,5]",
+    "genre":["Family","Fantasy","Musical"]}
+    "id":271,
+    "updated":true,
 ```
+---
 
 ## /addgenre
 

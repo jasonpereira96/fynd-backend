@@ -11,7 +11,7 @@ Feature expectations:
 ## Estimations
 ### Storage capacity estimation
 
-We want to scale up the system to store 5 * 5 million = 25M movies. If we assume that 1 movie record takes up 1 KB of data, then we require 25 GB of storage space. 
+We want to scale up the system to store 5 * 5 million = 25M movies. If we assume that 1 movie record takes up 10 KB of data, then we require 250 GB of storage space. 
 
 However, if we add more information about movies, like a long description or thumbnail images, then this number could go up very quickly.
 
@@ -22,7 +22,7 @@ Also, for serving static images we will need a distributed storage service like 
 The application should be able to handle 5 * 15M = 75M requests a day. That amounts to two billion two hundred fifty million requests a month. AWS can easily handle this kind of load at approximately $2.38 per million requests. (https://aws.amazon.com/api-gateway/pricing/)
 
 ### RAM
-If we want to cache 20% of these requests, we need memory of 0.2 * 75M * 1KB = 15 GB of RAM a day.
+If we want to cache 20% of these requests, we need memory of 0.2 * 75M * 10KB = 150 GB of RAM a day.
 
 ## Load balancing
 

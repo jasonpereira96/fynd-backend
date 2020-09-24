@@ -16,15 +16,15 @@ The base URL is: https://fynd-app.herokuapp.com/
 
 ## Error conditions
 1. For the APIs that require authentication, in case of an invalid API key, the API will return 
-```
+```json
 {
-	error: 'authentication failed'
+	"error": "authentication failed"
 }
 ```
 2.  In case of calling an invalid API,
-```
+```json
 { 
-	error: 'invalid API' 
+	"error": "invalid API"
 }
 ```
 ## Authentication
@@ -48,7 +48,7 @@ Fields returned:
 - genre (Array of genres)
 - imdb_score
 - director
-```
+```bash
 curl https://fynd-app.herokuapp.com/movies
 ```
 Response:
@@ -145,7 +145,7 @@ Response:
 ## /genres
 Returns an array of movie genres currently in the DB.
 
-```
+```bash
 curl https://fynd-app.herokuapp.com/genres
 ```
 Response:
@@ -190,7 +190,7 @@ Search is case-sensitive.
 
 **NOTE: either name or director is required. Both can be supplied.**
 
-```
+```bash
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp'
 ```
 Response:
@@ -242,7 +242,7 @@ Response:
 ```
 ---
 
-```
+```bash
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?name=Ja' 
 ```
 Response: 
@@ -266,7 +266,7 @@ Response:
 ```
 ---
 
-```
+```bash
 curl --location --request GET 'https://fynd-app.herokuapp.com/search?director=Sp&name=Ja'
 ```
 Response:
@@ -301,7 +301,7 @@ Parameters:
 - imdb_score (required)
 - popularity (required)
 - apiKey (required)
-```
+```bash
 curl --location --request POST 'https://fynd-app.herokuapp.com/add' \
 --data-urlencode 'name=The Last Dance' \
 --data-urlencode 'director=Sylvester Stallone' \
@@ -326,7 +326,7 @@ Parameters:
 - id (required)
 - apiKey (required)
 
-```
+```bash
 curl --location --request POST 'https://fynd-app.herokuapp.com/delete' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68' \
 --data-urlencode 'id=200'
@@ -354,7 +354,7 @@ Parameters:
 
 **Note: Atleast one of the optional parameters is mandatory**
 
-```
+```bash
 curl --location --request POST 'https://fynd-app.herokuapp.com/update' \
 --data-urlencode 'director=Sylvester Stallone Statham' \
 --data-urlencode 'popularity=55' \
@@ -385,7 +385,7 @@ Parameters:
 - apiKey (required)
 
 
-```
+```bash
 curl --location --request POST 'https://fynd-app.herokuapp.com/addgenre' \
 --data-urlencode 'genre=Fantasy-Musical' \
 --data-urlencode 'apiKey=aba102da-f581-4ff7-a350-b7b671f70e68'

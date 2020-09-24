@@ -1,5 +1,7 @@
 # Scalability Document
 
+## Feature expectations
+
 Feature expectations: 
 
 1. Users can view or search for movies.
@@ -45,7 +47,7 @@ Since data is valuable and cannot be lost, we should keep a couple of replicas s
 
 ## Caching
 Caching is an essential operation to speed up reads. Since we can assume that the number of reads will far exceed the number of writes because movie data doesn't get updated very frequently compared to the number of requests for it, cache misses will be relatively infrequent. 
-Least Recently Used (LRU) can be a reasonable policy for our system. Under this policy, we discard the least recently used record first. We can use a Linked Hash Map or a similar data structure to store our records, which will also keep track of the results that have been accessed recently.
+Least Recently Used (LRU) can be a reasonable policy for our system. Under this policy, we discard the least recently used record first. We can use a Doubly Linked List with a Hash Map or a similar data structure to store our records, which will also keep track of the results that have been accessed recently.
 
 ## Speeding up /search
 
